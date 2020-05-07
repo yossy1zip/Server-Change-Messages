@@ -1,6 +1,7 @@
 package me.stoofles.ServerChangeMessages;
 
 
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -12,30 +13,14 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
 public class Events implements Listener {
-
-    @EventHandler
-    public void onPostLogin(PostLoginEvent event) {
-        TextComponent message = new TextComponent("+ " + event.getPlayer().getName());
-        for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
-            player.sendMessage(message);
-        }
-    }
-
     @EventHandler
     public void onPostSwitch(ServerSwitchEvent serverSwitchEvent) {
-        TextComponent message = new TextComponent(serverSwitchEvent.getPlayer() + " > " + serverSwitchEvent.getPlayer().getServer().getInfo().getName());
+        TextComponent message = new TextComponent(serverSwitchEvent.getPlayer() + " が" + serverSwitchEvent.getPlayer().getServer().getInfo().getName() + "サーバーに移動しました");
+        message.setColor( net.md_5.bungee.api.ChatColor.GREEN );
         for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
             if(!(serverSwitchEvent.getFrom() == null)){
                 player.sendMessage(message);
             }
-        }
-    }
-
-    @EventHandler
-    public void onPostLeave(PlayerDisconnectEvent event){
-        TextComponent message = new TextComponent("- " + event.getPlayer());
-        for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
-            player.sendMessage(message);
         }
     }
 }
